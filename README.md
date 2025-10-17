@@ -1,8 +1,8 @@
-# 📱 Pico.css Mobile Template - Modern tiny Mobile Alternative (~40KB gzipped)
+# 📱 Pico.css Mobile Template - Modern tiny Mobile Alternative 
 
 Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Perfect for PHP backends!
 
-![Weight](https://img.shields.io/badge/Weight-~22KB-brightgreen)
+![Weight](https://img.shields.io/badge/Weight-~40KB-brightgreen)
 ![CSS](https://img.shields.io/badge/CSS-Pico_CSS-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 

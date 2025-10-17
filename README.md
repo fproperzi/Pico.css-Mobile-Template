@@ -1,8 +1,8 @@
-# 📱 Pico PHP App - Modern tiny Mobile Alternative (22KB)
+# 📱 Pico.css Mobile Template - Modern tiny Mobile Alternative (22KB)
 
 Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Only 22KB (pico.css + custom.css + js). Perfect for PHP backends!
 
-![Weight](https://img.shields.io/badge/Weight-~40KB-brightgreen)
+![Weight](https://img.shields.io/badge/Weight-~22KB-brightgreen)
 ![CSS](https://img.shields.io/badge/CSS-Pico_CSS-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
@@ -43,14 +43,13 @@ Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with 
 
 ## 📊 Weight and Performance
 
-### Weight breakdown (gzipped):
+### This App Weight breakdown:
 ```
 Pico CSS (CDN):           ~10 KB
 Custom CSS:                ~8 KB
 JavaScript:                ~4 KB
-HTML:                     ~18 KB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    ~40 KB
+TOTAL:                    ~22 KB
 ```
 
 ## 🚀 Installation and Usage

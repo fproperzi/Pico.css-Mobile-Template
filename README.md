@@ -278,7 +278,7 @@ Pico.css-Mobile-Template/
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/yourusername/Pico.css-Mobile-Template/issues).
+Feel free to check the [issues page](https://github.com/fproperzi/Pico.css-Mobile-Template/issues).
 
 ## 📄 License
 

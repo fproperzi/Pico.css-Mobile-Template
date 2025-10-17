@@ -10,7 +10,9 @@ Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with 
 ## 🎬 Live Demo
 
 👉 **Try it now:**  
+
 > 🚀 [https://fproperzi.github.io/Pico.css-Mobile-Template/](https://fproperzi.github.io/Pico.css-Mobile-Template/)
+
 > 🧩 Fully interactive demo — open it on mobile or resize your browser to experience the responsive layout.
 
 

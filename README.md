@@ -1,6 +1,6 @@
-# 📱 Pico.css Mobile Template - Modern tiny Mobile Alternative (22KB)
+# 📱 Pico.css Mobile Template - Modern tiny Mobile Alternative (~40KB gzipped)
 
-Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Only 22KB (pico.css + custom.css + js). Perfect for PHP backends!
+Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Perfect for PHP backends!
 
 ![Weight](https://img.shields.io/badge/Weight-~22KB-brightgreen)
 ![CSS](https://img.shields.io/badge/CSS-Pico_CSS-blue)
@@ -34,22 +34,23 @@ Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with 
 - ✅ **Material Design colors** (blue #2196F3)
 - ✅ **Fully responsive** - Mobile, tablet, desktop
 - ✅ **Dark mode ready** - Prepared for dark theme
-- ✅ **Smooth animations** - Optimized CSS transitions
 
 ### ⚙️ Form Features
 - ✅ Validated form with all HTML5 controls
-- ✅ Input text, email, tel, select, checkbox
+- ✅ Input text, email, tel, select, checkbox, Pico style!
 - ✅ Integrated error handling
+
 
 ## 📊 Weight and Performance
 
-### This App Weight breakdown:
+### Weight breakdown (gzipped):
 ```
 Pico CSS (CDN):           ~10 KB
 Custom CSS:                ~8 KB
 JavaScript:                ~4 KB
+HTML:                     ~18 KB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    ~22 KB
+TOTAL:                    ~40 KB
 ```
 
 ## 🚀 Installation and Usage
@@ -57,7 +58,7 @@ TOTAL:                    ~22 KB
 ### Download
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pico-php-app.git
+git clone https://github.com/fproperzi/Pico.css-Mobile-Template.git
 
 # Or download the HTML file directly
 ```
@@ -241,13 +242,10 @@ closePanel();
 
 ## 📝 File Structure
 ```
-pico-php-app/
+Pico.css-Mobile-Template/
 ├── index.html          # Main file (all-in-one)
-├── README.md           # This file
-└── screenshots/        # Optional screenshots
-    ├── home.png
-    ├── mobile.png
-    └── dialogs.png
+└── README.md           # This file
+
 ```
 
 ## 🎓 Ideal Use Cases
@@ -270,7 +268,7 @@ pico-php-app/
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/yourusername/pico-php-app/issues).
+Feel free to check the [issues page](https://github.com/yourusername/Pico.css-Mobile-Template/issues).
 
 ## 📄 License
 
@@ -293,4 +291,4 @@ For questions or suggestions, open an issue on GitHub.
 ## 🌍 Languages
 
 - [English](README.md) (this file)
-- [Italiano](README.it.md) (soon)
+

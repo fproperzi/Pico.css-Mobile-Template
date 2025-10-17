@@ -2,7 +2,7 @@
 
 Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Perfect for PHP backends!
 
-![Weight](https://img.shields.io/badge/Weight-~40KB-brightgreen)
+![Weight](https://img.shields.io/badge/Weight-~19KB-brightgreen)
 ![CSS](https://img.shields.io/badge/CSS-Pico_CSS-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
@@ -40,7 +40,7 @@ Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with 
 - ✅ Complete test page for dialogs and toasts
 
 ### 🎨 Design
-- ✅ **Pico CSS** (only 10KB) - Minimal CSS framework
+- ✅ **Pico CSS** (only ~13KB) - Minimal CSS framework
 - ✅ **Material Design colors** (blue #2196F3)
 - ✅ **Fully responsive** - Mobile, tablet, desktop
 - ✅ **Dark mode ready** - Prepared for dark theme
@@ -53,14 +53,15 @@ Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with 
 
 ## 📊 Weight and Performance
 
-### Weight breakdown (gzipped):
+### Weight breakdown (original/gzipped):
 ```
-Pico CSS (CDN):           ~10 KB
-Custom CSS:                ~8 KB
-JavaScript:                ~4 KB
-HTML:                     ~18 KB
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    ~40 KB
+				Original       Gzipped 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Pico CSS (CDN):   ~81 KB		~13 KB	
+Custom CSS:       ~14 KB        ~ 3 KB
+JavaScript:       ~11 KB        ~ 3 KB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL:           ~106 KB        ~19 KB
 ```
 
 ## 🚀 Installation and Usage

@@ -1,4 +1,4 @@
-# 📱 Pico PHP App - Modern tiny Mobile Alternative (40KB)
+# 📱 Pico PHP App - Modern tiny Mobile Alternative (22KB)
 
 Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Only 22KB (pico.css + custom.css + js). Perfect for PHP backends!
 

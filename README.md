@@ -1,6 +1,6 @@
-# 📱 Pico PHP App - Modern jQuery Mobile Alternative (40KB)
+# 📱 Pico PHP App - Modern tiny Mobile Alternative (40KB)
 
-Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Only 40KB vs 270KB of Framework7. Perfect for PHP backends!
+Ultra-lightweight mobile web app with Pico CSS. Features: responsive lists with search, side panels, async dialogs, toast system. Only 22KB (pico.css + custom.css + js). Perfect for PHP backends!
 
 ![Weight](https://img.shields.io/badge/Weight-~40KB-brightgreen)
 ![CSS](https://img.shields.io/badge/CSS-Pico_CSS-blue)

@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App PHP - Pico CSS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        /* ============================================
+           PERSONALIZZAZIONE COLORI E STILE JQM-LIKE
+           ============================================ */
+        
+        :root {
+            --primary: #2196F3;
+            --primary-hover: #1976D2;
+            --primary-focus: rgba(33, 150, 243, 0.125);
+            --header-bg: #1976D2;
+            --footer-bg: #f7f7f7;
+            --panel-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .page.active {
+            display: flex;
+        }
+        
+        .app-header {
+            background: var(--header-bg);
+            color: white;
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            gap: 8px;
+            flex: 0 0 auto;
+        }
+
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-title {
+            flex: 1 1 auto;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            padding: 0 12px;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        /* Burger button - visibile solo su mobile */
+        .burger-btn {
+            display: none;
+        }
+
+        /* Desktop navigation - visibile solo su desktop */
+        .desktop-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .desktop-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ============================================
+           MAIN CONTENT AREA
+           ============================================ */
+        
+        .page-content {
+            flex: 1;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* ============================================
+           LISTVIEW con SEARCH - Stile JQM
+           ============================================ */
+        
+        .searchbar {
+            background: white;
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .searchbar input {
+            margin: 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .searchbar input:focus {
+            border-color: var(--primary);
+        }
+
+        .listview {
+            background: white;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .listview li {
+            border-bottom: 1px solid #e0e0e0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .listview ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .listview li:last-child {
+            border-bottom: none;
+        }
+
+        .listview a,
+        .listview .list-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #333;
+            transition: background 0.2s;
+            gap: 12px;
+        }
+
+        .listview a:hover {
+            background: #f5f7ff;
+        }
+
+        .list-item-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #e0e0e0;
+        }
+
+        .list-item-avatar.round {
+            border-radius: 50%;
+        }
+
+        .list-item-content {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .list-item-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .list-item-after {
+            color: var(--primary);
+            font-weight: 600;
+            margin-left: 12px;
+            font-size: 1.5rem;
+        }
+
+        .list-divider {
+            background: #f7f7f7;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* ============================================
+           FOOTER - Stile jQuery Mobile (altezza ridotta)
+           ============================================ */
+        
+        .app-footer {
+            background: var(--footer-bg);
+            border-top: 1px solid #e0e0e0;
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 999;
+        }
+
+        .footer-navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 4px 0;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .footer-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 8px;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .footer-btn:hover,
+        .footer-btn.active {
+            color: var(--primary);
+        }
+
+        .footer-btn-icon {
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .footer-btn-label {
+            font-size: 0.7rem;
+            line-height: 1;
+        }
+
+        /* Desktop: footer ancora più compatto */
+        @media (min-width: 769px) {
+            .footer-navbar {
+                padding: 2px 0;
+            }
+
+            .footer-btn {
+                padding: 4px 8px;
+            }
+
+            .footer-btn-icon {
+                font-size: 1.1rem;
+            }
+
+            .footer-btn-label {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* ============================================
+           PANEL - Stile jQuery Mobile
+           ============================================ */
+        
+        .panel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .panel-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            max-width: 80%;
+            background: var(--panel-bg);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .panel.panel-right {
+            left: auto;
+            right: 0;
+            transform: translateX(100%);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .panel.show {
+            transform: translateX(0);
+        }
+
+        .panel-header {
+            background: var(--header-bg);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .panel-content {
+            padding: 0;
+        }
+
+        .panel .listview {
+            margin: 0;
+        }
+
+        .panel .listview li {
+            list-style-type: none;
+        }
+
+        .panel .listview ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ============================================
+           POPUP/MODAL
+           ============================================ */
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup {
+            background: white;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            transform: scale(0.7) translateY(-30px);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+
+        .popup-overlay.show .popup {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .popup-header {
+            background: var(--header-bg);
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .popup-content {
+            padding: 20px;
+        }
+
+        .popup-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Rimosso slideIn - ora gestito con transition */
+
+        /* ============================================
+           MULTIPAGINA - Gestione pagine (versione semplice)
+           ============================================ */
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* ============================================
+           DIALOG OVERLAY E BOX
+           ============================================ */
+        
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dialog-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .dialog-box {
+            background: white;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+
+        .dialog-overlay.show .dialog-box {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .dialog-header {
+            background: #f7f7f7;
+            padding: 16px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dialog-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .dialog-content {
+            padding: 20px;
+        }
+
+        .dialog-message {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .dialog-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 15px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .dialog-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .dialog-buttons {
+            display: flex;
+            border-top: 1px solid #ddd;
+            margin: 0;
+        }
+
+        .dialog-button {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .dialog-button:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+
+        .dialog-button:hover {
+            background: #f5f5f5;
+        }
+
+        .dialog-button:active {
+            background: #e8e8e8;
+        }
+
+        .dialog-button.primary {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .dialog-button.secondary {
+            color: #666;
+        }
+
+        /* ============================================
+           TOAST SYSTEM
+           ============================================ */
+        
+        .toast-container {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.hiding {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toast-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .toast.success {
+            border-left-color: #4CAF50;
+        }
+
+        .toast.success .toast-icon {
+            color: #4CAF50;
+        }
+
+        .toast.error {
+            border-left-color: #f44336;
+        }
+
+        .toast.error .toast-icon {
+            color: #f44336;
+        }
+
+        .toast.warning {
+            border-left-color: #ff9800;
+        }
+
+        .toast.warning .toast-icon {
+            color: #ff9800;
+        }
+
+        .toast.info {
+            border-left-color: var(--primary);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--primary);
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: currentColor;
+            opacity: 0.3;
+            animation: progress linear;
+        }
+
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        @media (max-width: 768px) {
+            .toast-container {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                top: 60px;
+            }
+
+            .toast {
+                min-width: auto;
+            }
+        }
+
+        /* ============================================
+           BUTTONS E FORM
+           ============================================ */
+        
+        button, .button {
+            background: var(--primary);
+            border-color: var(--primary);
+            transition: all 0.2s;
+        }
+
+        button:hover, .button:hover {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .button-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .button-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ============================================
+           CARDS
+           ============================================ */
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        /* ============================================
+           UTILITY
+           ============================================ */
+        
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .p-1 { padding: 1rem; }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        
+        /* Mobile: mostra burger, nascondi nav desktop */
+        @media (max-width: 768px) {
+            .burger-btn {
+                display: inline-block !important;
+            }
+            
+            .desktop-nav {
+                display: none !important;
+            }
+            
+            .header-title {
+                font-size: 1.1rem;
+            }
+
+            .header-left {
+                min-width: auto;
+            }
+
+            .header-right {
+                min-width: auto;
+            }
+        }
+
+        /* Desktop: nascondi burger, mostra nav normale */
+        @media (min-width: 769px) {
+            .burger-btn {
+                display: none !important;
+            }
+            
+            .desktop-nav {
+                display: flex !important;
+            }
+
+            .header-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 12px 24px;
+            }
+
+            .header-title {
+                text-align: left;
+                flex: 0 0 auto;
+                margin-right: auto;
+            }
+
+            .footer-navbar {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .content-wrapper {
+                padding: 0 24px;
+            }
+        }
+
+        /* No results message */
+        .no-results {
+            padding: 40px 20px;
+            text-align: center;
+            color: #999;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        /* Liste senza pallini */
+        .no-bullets {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .no-bullets li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ============================================
+         PAGINA 1 - HOME CON LISTA
+         ============================================ -->
+    <div class="page active" id="page-home">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <!-- Burger button - solo mobile -->
+                    <button class="header-btn burger-btn" onclick="openPanel('left')">☰</button>
+                </div>
+                <h1 class="header-title">📱 Contacts</h1>
+                
+                <!-- Desktop navigation - solo desktop -->
+                <nav class="desktop-nav">
+                    <a href="#" onclick="goToPage('page-home'); return false;">Home</a>
+                    <a href="#" onclick="goToPage('page-form'); return false;">Add</a>
+                    <a href="#" onclick="goToPage('page-test'); return false;">Test</a>
+                    <a href="#" onclick="goToPage('page-about'); return false;">Info</a>
+                </nav>
+                
+                <div class="header-right">
+                    <button class="header-btn" onclick="openPanel('right')">⚙️</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="page-content">
+            <div class="content-wrapper">
+                <!-- Searchbar -->
+                <div class="searchbar">
+                    <input type="search" id="searchInput" placeholder="Cerca contatti..." onkeyup="filterList()" oninput="filterList()">
+                </div>
+
+                <!-- Listview -->
+                <ul class="listview" id="contactList">
+                    <li class="list-divider">A</li>
+                    <li data-name="Alessandro Russo">
+                        <a href="#" onclick="goToPage('page-detail', 'Alessandro Russo'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=12" alt="Alessandro Russo" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Alessandro Russo</div>
+                                <div class="list-item-subtitle">CEO • alessandro.russo@company.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Anna Bianchi">
+                        <a href="#" onclick="goToPage('page-detail', 'Anna Bianchi'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=47" alt="Anna Bianchi" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Anna Bianchi</div>
+                                <div class="list-item-subtitle">Designer • anna.bianchi@example.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Andrea Verdi">
+                        <a href="#" onclick="goToPage('page-detail', 'Andrea Verdi'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=33" alt="Andrea Verdi" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Andrea Verdi</div>
+                                <div class="list-item-subtitle">Developer • andrea.verdi@example.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">C</li>
+                    <li data-name="Carla Moretti">
+                        <a href="#" onclick="goToPage('page-detail', 'Carla Moretti'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=20" alt="Carla Moretti" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Carla Moretti</div>
+                                <div class="list-item-subtitle">Project Manager • carla.m@studio.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Chiara Romano">
+                        <a href="#" onclick="goToPage('page-detail', 'Chiara Romano'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=48" alt="Chiara Romano" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Chiara Romano</div>
+                                <div class="list-item-subtitle">UX Designer • chiara@design.io</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">E</li>
+                    <li data-name="Elena Martini">
+                        <a href="#" onclick="goToPage('page-detail', 'Elena Martini'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=45" alt="Elena Martini" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Elena Martini</div>
+                                <div class="list-item-subtitle">Consultant • elena@consulting.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Enrico Conti">
+                        <a href="#" onclick="goToPage('page-detail', 'Enrico Conti'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=17" alt="Enrico Conti" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Enrico Conti</div>
+                                <div class="list-item-subtitle">Photographer • enrico@photo.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">F</li>
+                    <li data-name="Fabio Leone">
+                        <a href="#" onclick="goToPage('page-detail', 'Fabio Leone'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=59" alt="Fabio Leone" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Fabio Leone</div>
+                                <div class="list-item-subtitle">Developer • fabio.l@devstudio.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Federica Longo">
+                        <a href="#" onclick="goToPage('page-detail', 'Federica Longo'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=38" alt="Federica Longo" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Federica Longo</div>
+                                <div class="list-item-subtitle">Content Writer • federica@media.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">G</li>
+                    <li data-name="Giulia Colombo">
+                        <a href="#" onclick="goToPage('page-detail', 'Giulia Colombo'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=23" alt="Giulia Colombo" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Giulia Colombo</div>
+                                <div class="list-item-subtitle">Journalist • giulia@news.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Giuseppe Rizzo">
+                        <a href="#" onclick="goToPage('page-detail', 'Giuseppe Rizzo'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=60" alt="Giuseppe Rizzo" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Giuseppe Rizzo</div>
+                                <div class="list-item-subtitle">Doctor • g.rizzo@clinic.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">L</li>
+                    <li data-name="Laura Greco">
+                        <a href="#" onclick="goToPage('page-detail', 'Laura Greco'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=49" alt="Laura Greco" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Laura Greco</div>
+                                <div class="list-item-subtitle">Teacher • laura.greco@school.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Luca Pellegrini">
+                        <a href="#" onclick="goToPage('page-detail', 'Luca Pellegrini'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=70" alt="Luca Pellegrini" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Luca Pellegrini</div>
+                                <div class="list-item-subtitle">Mechanic • luca.p@autoservice.it</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">M</li>
+                    <li data-name="Marco Rossi">
+                        <a href="#" onclick="goToPage('page-detail', 'Marco Rossi'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=58" alt="Marco Rossi" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Marco Rossi</div>
+                                <div class="list-item-subtitle">Manager • marco.rossi@example.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Maria Neri">
+                        <a href="#" onclick="goToPage('page-detail', 'Maria Neri'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=29" alt="Maria Neri" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Maria Neri</div>
+                                <div class="list-item-subtitle">HR • maria.neri@example.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Matteo Caruso">
+                        <a href="#" onclick="goToPage('page-detail', 'Matteo Caruso'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=64" alt="Matteo Caruso" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Matteo Caruso</div>
+                                <div class="list-item-subtitle">Frontend Dev • matteo@webdev.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">S</li>
+                    <li data-name="Sara Blu">
+                        <a href="#" onclick="goToPage('page-detail', 'Sara Blu'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=28" alt="Sara Blu" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Sara Blu</div>
+                                <div class="list-item-subtitle">Sales • sara.blu@example.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                    <li data-name="Simone Battaglia">
+                        <a href="#" onclick="goToPage('page-detail', 'Simone Battaglia'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=53" alt="Simone Battaglia" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Simone Battaglia</div>
+                                <div class="list-item-subtitle">Personal Trainer • simone@fitness.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+
+                    <li class="list-divider">V</li>
+                    <li data-name="Valentina Rossi">
+                        <a href="#" onclick="goToPage('page-detail', 'Valentina Rossi'); return false;">
+                            <img src="https://i.pravatar.cc/80?img=24" alt="Valentina Rossi" class="list-item-avatar">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Valentina Rossi</div>
+                                <div class="list-item-subtitle">Psychologist • valentina@therapy.com</div>
+                            </div>
+                            <div class="list-item-after">›</div>
+                        </a>
+                    </li>
+                </ul>
+                    
+
+                <div class="no-results" id="noResults">
+                    <p style="font-size: 3rem;">🔍</p>
+                    <p>No contacts found</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <nav class="footer-navbar">
+                <a href="#" class="footer-btn active" onclick="goToPage('page-home'); return false;">
+                    <span class="footer-btn-icon">🏠</span>
+                    <span class="footer-btn-label">Home</span>
+                </a>
+                <a href="#" class="footer-btn" onclick="goToPage('page-form'); return false;">
+                    <span class="footer-btn-icon">➕</span>
+                    <span class="footer-btn-label">Add</span>
+                </a>
+                <a href="#" class="footer-btn" onclick="goToPage('page-test'); return false;">
+                    <span class="footer-btn-icon">🧪</span>
+                    <span class="footer-btn-label">Test</span>
+                </a>
+                <a href="#" class="footer-btn" onclick="goToPage('page-about'); return false;">
+                    <span class="footer-btn-icon">ℹ️</span>
+                    <span class="footer-btn-label">Info</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- ============================================
+         PAGINA 2 - DETTAGLIO
+         ============================================ -->
+    <div class="page" id="page-detail">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="header-btn" onclick="goBack()">‹ Back</button>
+                </div>
+                <h1 class="header-title" id="detailTitle">Details</h1>
+                <div class="header-right">
+                    <button class="header-btn" onclick="editContact()">✏️ Edit</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">Contact Information</div>
+                    <table>
+                        <tr><td><strong>Nome:</strong></td><td id="detailName">-</td></tr>
+                        <tr><td><strong>Email:</strong></td><td>contatto@example.com</td></tr>
+                        <tr><td><strong>Phone:</strong></td><td>+39 123 456 789</td></tr>
+                        <tr><td><strong>Role:</strong></td><td>Developer</td></tr>
+                    </table>
+                </div>
+
+                <div style="padding: 16px;">
+                    <button onclick="callContact()" style="width: 100%; margin-bottom: 10px;">📞 Call</button>
+                    <button onclick="emailContact()" class="button-outline" style="width: 100%;">✉️ Email</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <nav class="footer-navbar">
+                <button class="footer-btn" onclick="goToPage('page-home')">
+                    <span class="footer-btn-icon">🏠</span>
+                    <span class="footer-btn-label">Home</span>
+                </button>
+                <button class="footer-btn" onclick="deleteContact()">
+                    <span class="footer-btn-icon">🗑️</span>
+                    <span class="footer-btn-label">Delete</span>
+                </button>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- ============================================
+         PAGINA 3 - FORM
+         ============================================ -->
+    <div class="page" id="page-form">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="header-btn" onclick="goBack()">‹ Back</button>
+                </div>
+                <h1 class="header-title">New Contact</h1>
+                <div class="header-right">
+                    <button class="header-btn" onclick="saveForm()">💾 Save</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="content-wrapper">
+                <form id="contactForm" style="padding: 16px; background: white;">
+                    <label>
+                        Full name
+                        <input type="text" name="nome" placeholder="Mario Rossi" required>
+                    </label>
+
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="mario@example.com" required>
+                    </label>
+
+                    <label>
+                        Phone
+                        <input type="tel" name="telefono" placeholder="+39 123 456 789">
+                    </label>
+
+                    <label>
+                        Role
+                        <select name="ruolo">
+                            <option value="">Seleziona ruolo...</option>
+                            <option value="designer">Designer</option>
+                            <option value="developer">Developer</option>
+                            <option value="manager">Manager</option>
+                            <option value="hr">HR</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="attivo" checked>
+                        Active contact
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PAGINA 4 - TEST DIALOGHI E TOAST
+         ============================================ -->
+    <div class="page" id="page-test">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="header-btn" onclick="goBack()">‹ Back</button>
+                </div>
+                <h1 class="header-title">🧪 Test Dialoghi</h1>
+                <div class="header-right"></div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">📱 Dialoghi (Sincroni)</div>
+                    <div style="display: grid; gap: 10px; margin-top: 10px;">
+                        <button onclick="testAlert()">💬 Test Alert</button>
+                        <button onclick="testConfirm()">❓ Test Confirm</button>
+                        <button onclick="testPrompt()">✏️ Test Prompt</button>
+                        <button onclick="testSequence()" class="button-outline">🔄 Test Sequenza Completa</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">🍞 Toast Singoli</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <button onclick="showSuccessToast()" style="background: #4CAF50;">✅ Success</button>
+                        <button onclick="showErrorToast()" style="background: #f44336;">❌ Error</button>
+                        <button onclick="showWarningToast()" style="background: #ff9800;">⚠️ Warning</button>
+                        <button onclick="showInfoToast()" style="background: #2196F3;">ℹ️ Info</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">🍞🍞 Toast Multipli</div>
+                    <div style="display: grid; gap: 10px; margin-top: 10px;">
+                        <button onclick="showMultipleToasts()">📚 Mostra 3 Toast</button>
+                        <button onclick="showToastSequence()">⚡ Sequenza 5 Toast</button>
+                        <button onclick="clearAllToasts()" style="background: #f44336;">🗑️ Cancella Tutti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PAGINA 5 - INFO (era 4)
+         ============================================ -->
+    <div class="page" id="page-about">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="header-btn" onclick="goBack()">‹ Back</button>
+                </div>
+                <h1 class="header-title">Information</h1>
+                <div class="header-right"></div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">🎨 Pico CSS + PHP</div>
+                    <p>Questa è un'app demo che mostra come usare Pico CSS con PHP per creare un'interfaccia simile a jQuery Mobile ma moderna.</p>
+                    <h4>Caratteristiche:</h4>
+                    <ul class="no-bullets">
+                        <li>✅ Header con pulsanti</li>
+                        <li>✅ Footer con navbar</li>
+                        <li>✅ ListView con ricerca</li>
+                        <li>✅ Panel laterali</li>
+                        <li>✅ Popup/Modal</li>
+                        <li>✅ Multi-pagina</li>
+                        <li>✅ Responsive</li>
+                        <li>✅ Solo 10KB di CSS!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL SINISTRO - MENU -->
+    <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+    <div class="panel" id="panelLeft">
+        <div class="panel-header">☰ Menu</div>
+        <div class="panel-content">
+            <ul class="listview">
+                <li class="list-divider">Navigation</li>
+                <li><a href="#" onclick="goToPage('page-home'); closePanel(); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🏠 Home</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="goToPage('page-form'); closePanel(); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">➕ New Contact</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="goToPage('page-test'); closePanel(); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🧪 Test Dialoghi</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="goToPage('page-about'); closePanel(); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">ℹ️ Information</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Contacts</li>
+                <li><a href="#" onclick="alert('All contacts'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">👥 All contacts</div>
+                        <div class="list-item-subtitle">125 contatti salvati</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Favorites'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">⭐ Favorites</div>
+                        <div class="list-item-subtitle">15 contatti</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Groups'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">👨‍👩‍👧‍👦 Groups</div>
+                        <div class="list-item-subtitle">8 gruppi</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Recent'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🕐 Recent</div>
+                        <div class="list-item-subtitle">Ultimi 20 contatti</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Tools</li>
+                <li><a href="#" onclick="alert('Import contatti'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">📥 Import</div>
+                        <div class="list-item-subtitle">Da file CSV o vCard</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Export contatti'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">📤 Export</div>
+                        <div class="list-item-subtitle">Backup completo</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Duplicati'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔍 Find duplicates</div>
+                        <div class="list-item-subtitle">Pulisci database</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Statistics'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">📊 Statistics</div>
+                        <div class="list-item-subtitle">Analisi contatti</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Settings</li>
+                <li><a href="#" onclick="alert('Notifications'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔔 Notifications</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Theme'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🌙 Dark theme</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Privacy'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔒 Privacy</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Automatic backup'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">☁️ Automatic backup</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Synchronization'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔄 Synchronization</div>
+                        <div class="list-item-subtitle">Google, iCloud</div>
+                    </div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PANEL DESTRO - IMPOSTAZIONI -->
+    <div class="panel panel-right" id="panelRight">
+        <div class="panel-header">⚙️ Settings</div>
+        <div class="panel-content">
+            <ul class="listview">
+                <li class="list-divider">Account</li>
+                <li><a href="#" onclick="alert('Profilo'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">👤 Il mio profilo</div>
+                        <div class="list-item-subtitle">mario.rossi@email.com</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Cambia password'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔑 Cambia password</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Email e notifiche'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">✉️ Email e notifiche</div>
+                        <div class="list-item-subtitle">Gestisci preferenze</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Privacy e Sicurezza</li>
+                <li><a href="#" onclick="alert('Privacy'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔒 Settings privacy</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Autenticazione'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔐 Two-factor authentication</div>
+                        <div class="list-item-subtitle">Attiva 2FA</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Active sessions'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">💻 Active sessions</div>
+                        <div class="list-item-subtitle">3 dispositivi connessi</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Recent logins'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🕐 Recent logins</div>
+                        <div class="list-item-subtitle">Cronologia login</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">App preferences</li>
+                <li><a href="#" onclick="alert('Language'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🌍 Language</div>
+                        <div class="list-item-subtitle">Italiano</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Theme'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🎨 Theme</div>
+                        <div class="list-item-subtitle">Chiaro</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Text size'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔤 Text size</div>
+                        <div class="list-item-subtitle">Media</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Suoni'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🔊 Sounds and vibrations</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Dati e Storage</li>
+                <li><a href="#" onclick="alert('Storage management'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">💾 Storage management</div>
+                        <div class="list-item-subtitle">2.3 MB utilizzati</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Clear cache'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">🗑️ Clear cache</div>
+                        <div class="list-item-subtitle">Libera 1.2 MB</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Automatic downloads'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">⬇️ Automatic downloads</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Supporto</li>
+                <li><a href="#" onclick="alert('Aiuto'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">❓ Help center</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Feedback'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">💬 Send feedback</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Info app'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">ℹ️ Information app</div>
+                        <div class="list-item-subtitle">Versione 1.0.0</div>
+                    </div>
+                </a></li>
+                <li><a href="#" onclick="alert('Terms and conditions'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title">📄 Terms and conditions</div>
+                    </div>
+                </a></li>
+                
+                <li class="list-divider">Azioni</li>
+                <li><a href="#" onclick="if(confirm('Vuoi uscire?')) alert('Logout effettuato'); return false;">
+                    <div class="list-item-content">
+                        <div class="list-item-title" style="color: #f44336;">🚪 Logout</div>
+                    </div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================
+         POPUP DEMO
+         ============================================ -->
+    <div class="popup-overlay" id="popup-demo">
+        <div class="popup">
+            <div class="popup-header">💬 Popup Demo</div>
+            <div class="popup-content">
+                <p>Questo è un popup personalizzato!</p>
+                <p>Puoi inserire qualsiasi contenuto HTML qui dentro.</p>
+                <label>
+                    Nome:
+                    <input type="text" placeholder="Inserisci il tuo nome...">
+                </label>
+            </div>
+            <div class="popup-footer">
+                <button class="button-outline" onclick="closePopup('popup-demo')">Cancel</button>
+                <button onclick="closePopup('popup-demo'); alert('Salvato!');">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Dialog Overlay -->
+    <div class="dialog-overlay" id="dialogOverlay">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title" id="dialogTitle"></h3>
+            </div>
+            <div class="dialog-content">
+                <p class="dialog-message" id="dialogMessage"></p>
+                <input type="text" class="dialog-input" id="dialogInput" style="display: none;">
+            </div>
+            <div class="dialog-buttons" id="dialogButtons"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        // ============================================
+        // VARIABILI GLOBALI
+        // ============================================
+        let toastCounter = 0;
+        const activeToasts = new Set();
+
+        // ============================================
+        // DIALOGHI PERSONALIZZATI (SINCRONI)
+        // ============================================
+
+        /**
+         * Alert personalizzato - si comporta come window.alert()
+         */
+        function alert(message) {
+            return new Promise((resolve) => {
+                showDialog('Warning', message, [
+                    { text: 'OK', primary: true, action: () => {
+                        hideDialog();
+                        resolve();
+                    }}
+                ], 'alert');
+            });
+        }
+
+        /**
+         * Confirm personalizzato - si comporta come window.confirm()
+         */
+        function confirm(message) {
+            return new Promise((resolve) => {
+                showDialog('Confirm', message, [
+                    { text: 'Cancel', primary: false, action: () => {
+                        hideDialog();
+                        resolve(false);
+                    }},
+                    { text: 'OK', primary: true, action: () => {
+                        hideDialog();
+                        resolve(true);
+                    }}
+                ], 'confirm');
+            });
+        }
+
+        /**
+         * Prompt personalizzato - si comporta come window.prompt()
+         */
+        function prompt(message, defaultValue = '') {
+            return new Promise((resolve) => {
+                const input = document.getElementById('dialogInput');
+                input.value = defaultValue;
+                input.style.display = 'block';
+                
+                showDialog('Enter value', message, [
+                    { text: 'Cancel', primary: false, action: () => {
+                        input.style.display = 'none';
+                        hideDialog();
+                        resolve(null);
+                    }},
+                    { text: 'OK', primary: true, action: () => {
+                        const value = input.value;
+                        input.style.display = 'none';
+                        hideDialog();
+                        resolve(value);
+                    }}
+                ], 'prompt');
+
+                setTimeout(() => {
+                    input.focus();
+                    input.select();
+                }, 150);
+
+                input.onkeydown = (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const value = input.value;
+                        input.style.display = 'none';
+                        hideDialog();
+                        resolve(value);
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        input.style.display = 'none';
+                        hideDialog();
+                        resolve(null);
+                    }
+                };
+            });
+        }
+
+        function showDialog(title, message, buttons, type) {
+            const overlay = document.getElementById('dialogOverlay');
+            const dialogTitle = document.getElementById('dialogTitle');
+            const dialogMessage = document.getElementById('dialogMessage');
+            const dialogButtons = document.getElementById('dialogButtons');
+
+            dialogTitle.textContent = title;
+            dialogMessage.textContent = message;
+            dialogButtons.innerHTML = '';
+
+            buttons.forEach((btn, index) => {
+                const button = document.createElement('button');
+                button.textContent = btn.text;
+                button.className = `dialog-button ${btn.primary ? 'primary' : 'secondary'}`;
+                button.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    btn.action();
+                };
+                
+                if (type !== 'prompt' && index === buttons.length - 1) {
+                    setTimeout(() => button.focus(), 150);
+                }
+                
+                dialogButtons.appendChild(button);
+            });
+
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideDialog() {
+            const overlay = document.getElementById('dialogOverlay');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // ============================================
+        // TOAST SYSTEM
+        // ============================================
+
+        /**
+         * Mostra un toast
+         */
+        function toast(type, title, message, duration = 4000) {
+            const container = document.getElementById('toastContainer');
+            const toastId = `toast-${++toastCounter}`;
+            
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+
+            const toastEl = document.createElement('div');
+            toastEl.className = `toast ${type}`;
+            toastEl.id = toastId;
+            toastEl.innerHTML = `
+                <div class="toast-icon">${icons[type]}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="removeToast('${toastId}')">×</button>
+                <div class="toast-progress" style="animation-duration: ${duration}ms; color: ${getToastColor(type)}"></div>
+            `;
+
+            container.appendChild(toastEl);
+            activeToasts.add(toastId);
+
+            setTimeout(() => toastEl.classList.add('show'), 10);
+
+            setTimeout(() => {
+                removeToast(toastId);
+            }, duration);
+
+            return toastId;
+        }
+
+        function removeToast(toastId) {
+            const toastEl = document.getElementById(toastId);
+            if (!toastEl) return;
+
+            toastEl.classList.add('hiding');
+            activeToasts.delete(toastId);
+
+            setTimeout(() => {
+                toastEl.remove();
+            }, 300);
+        }
+
+        function clearAllToasts() {
+            activeToasts.forEach(toastId => removeToast(toastId));
+        }
+
+        function getToastColor(type) {
+            const colors = {
+                success: '#4CAF50',
+                error: '#f44336',
+                warning: '#ff9800',
+                info: '#2196F3'
+            };
+            return colors[type] || colors.info;
+        }
+
+        // Toast shortcuts
+        function toastSuccess(title, message, duration) {
+            return toast('success', title, message, duration);
+        }
+
+        function toastError(title, message, duration) {
+            return toast('error', title, message, duration);
+        }
+
+        function toastWarning(title, message, duration) {
+            return toast('warning', title, message, duration);
+        }
+
+        function toastInfo(title, message, duration) {
+            return toast('info', title, message, duration);
+        }
+
+        // ============================================
+        // FUNZIONI TEST DIALOGHI E TOAST
+        // ============================================
+
+        async function testAlert() {
+            await alert('Questo è un messaggio di alert personalizzato!');
+        }
+
+        async function testConfirm() {
+            const result = await confirm('Sei sicuro di voler continuare con questa operazione?');
+            if (result) {
+                toastSuccess('Confermato', 'Hai cliccato OK');
+            } else {
+                toastInfo('Annullato', 'Hai cliccato Cancel');
+            }
+        }
+
+        async function testPrompt() {
+            const name = await prompt('Come ti chiami?', 'Mario Rossi');
+            if (name !== null && name.trim() !== '') {
+                toastSuccess('Nome inserito', `Ciao ${name}!`);
+            } else {
+                toastWarning('Annullato', 'Nessun nome inserito');
+            }
+        }
+
+        async function testSequence() {
+            await alert('Benvenuto! Iniziamo una sequenza di dialoghi.');
+
+            const wantsToContinue = await confirm('Vuoi continuare?');
+            if (!wantsToContinue) {
+                toastInfo('Interrotto', 'Sequenza annullata');
+                return;
+            }
+
+            const name = await prompt('Qual è il tuo nome?', 'Mario');
+            if (name === null || name.trim() === '') {
+                await alert('Non hai inserito un nome valido!');
+                return;
+            }
+
+            const age = await prompt('Quanti anni hai?', '25');
+            if (age === null) {
+                await alert('Devi inserire l\'età!');
+                return;
+            }
+
+            await alert(`Perfect ${name}! Hai ${age} anni.`);
+            toastSuccess('Sequenza completata!', `Registrazione di ${name} completata`, 5000);
+        }
+
+        function showSuccessToast() {
+            toastSuccess('Operation successful', 'Il file è stato salvato correttamente');
+        }
+
+        function showErrorToast() {
+            toastError('Error', 'Impossibile connettersi al server');
+        }
+
+        function showWarningToast() {
+            toastWarning('Warning', 'Lo spazio di archiviazione è quasi esaurito');
+        }
+
+        function showInfoToast() {
+            toastInfo('Information', 'È disponibile un nuovo aggiornamento');
+        }
+
+        function showMultipleToasts() {
+            toastSuccess('Toast 1', 'Primo toast di successo', 6000);
+            setTimeout(() => toastWarning('Toast 2', 'Secondo toast di avviso', 6000), 500);
+            setTimeout(() => toastInfo('Toast 3', 'Terzo toast informativo', 6000), 1000);
+        }
+
+        function showToastSequence() {
+            const types = ['success', 'error', 'warning', 'info', 'success'];
+            const messages = [
+                ['Primo', 'Toast numero 1'],
+                ['Secondo', 'Toast numero 2'],
+                ['Terzo', 'Toast numero 3'],
+                ['Quarto', 'Toast numero 4'],
+                ['Quinto', 'Toast numero 5']
+            ];
+
+            types.forEach((type, index) => {
+                setTimeout(() => {
+                    toast(type, messages[index][0], messages[index][1], 5000);
+                }, index * 300);
+            });
+        }
+
+        // Navigation multi-pagina semplice
+        let pageHistory = ['page-home'];
+        let currentContact = '';
+
+        function goToPage(pageId, contactName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId !== pageHistory[pageHistory.length - 1]) {
+                pageHistory.push(pageId);
+            }
+
+            if (contactName) {
+                currentContact = contactName;
+                document.getElementById('detailTitle').textContent = contactName;
+                document.getElementById('detailName').textContent = contactName;
+            }
+
+            document.querySelectorAll('.footer-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            closePanel();
+            window.scrollTo(0, 0);
+        }
+
+        function goBack() {
+            if (pageHistory.length > 1) {
+                pageHistory.pop();
+                const prevPage = pageHistory[pageHistory.length - 1];
+                goToPage(prevPage);
+            }
+        }
+
+        // Panel management
+        function openPanel(side) {
+            const overlay = document.getElementById('panelOverlay');
+            const panel = side === 'left' ? document.getElementById('panelLeft') : document.getElementById('panelRight');
+            
+            overlay.classList.add('show');
+            panel.classList.add('show');
+        }
+
+        function closePanel() {
+            document.getElementById('panelOverlay').classList.remove('show');
+            document.getElementById('panelLeft').classList.remove('show');
+            document.getElementById('panelRight').classList.remove('show');
+        }
+
+        // Popup management
+        function openPopup(popupId) {
+            document.getElementById(popupId).classList.add('show');
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).classList.remove('show');
+        }
+
+        // Search/Filter
+        function filterList() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const listItems = document.querySelectorAll('#contactList li[data-name]');
+            const dividers = document.querySelectorAll('#contactList .list-divider');
+            let visibleCount = 0;
+
+            listItems.forEach(item => {
+                const name = item.getAttribute('data-name').toLowerCase();
+                if (name.includes(searchTerm)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide/show dividers based on following items
+            dividers.forEach(divider => {
+                let nextItem = divider.nextElementSibling;
+                let hasVisibleItems = false;
+                
+                while (nextItem && !nextItem.classList.contains('list-divider')) {
+                    if (nextItem.style.display !== 'none') {
+                        hasVisibleItems = true;
+                        break;
+                    }
+                    nextItem = nextItem.nextElementSibling;
+                }
+                
+                divider.style.display = hasVisibleItems ? '' : 'none';
+            });
+
+            // Show/hide no results message
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        }
+
+        // Contact actions
+        function editContact() {
+            alert('Modifica contatto: ' + currentContact);
+        }
+
+        function callContact() {
+            alert('Chiamo: ' + currentContact);
+        }
+
+        function emailContact() {
+            alert('Invio email a: ' + currentContact);
+        }
+
+        function deleteContact() {
+            if (confirm('Vuoi eliminare il contatto ' + currentContact + '?')) {
+                alert('Contatto eliminato!');
+                goBack();
+            }
+        }
+
+        // Form save
+        function saveForm() {
+            const form = document.getElementById('contactForm');
+            if (form.checkValidity()) {
+                alert('Contatto salvato con successo!');
+                goBack();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // Close panels on overlay click
+        document.getElementById('panelOverlay').addEventListener('click', closePanel);
+
+        // Close popup on outside click
+        document.querySelectorAll('.popup-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
